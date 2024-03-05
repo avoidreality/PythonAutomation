@@ -1279,7 +1279,7 @@ def step8(pdb1):
             the_file = diff_scripts_path / "START_DIR.txt"
             if the_file.exists():
                 with open("START_DIR.txt", 'r') as sd:
-                    line = sd.readline().strip()
+                    line = sd.readline(5_000_000).strip()
                     print(f"[*] Line to parse to determine START_DIR is: {line}")
                     print(f"line now  = {line}")
                     start_data = my_re.sub("", line)#remove new-line characters
