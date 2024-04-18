@@ -5,6 +5,7 @@ import pathlib
 import logging
 import re
 import variable
+from security import safe_command
 
 #logging
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -449,7 +450,7 @@ def docker_deploy(script, container_d='ORADB12R1_OEL', up=True, ddl_release=True
 def docker_copy(container_d="ORADB12R1_OEL", source=r"C:\Users\ksmith\Desktop\test_docker_db\foobar.sql", target="/home/oracle/"):
     """Copy the deployment script to the Docker container $home folder """
     
-    copy_feedback =  subprocess.Popen(f'docker cp {source} {container_d.strip()}:{target} ', stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    copy_feedback =  safe_command.run(subprocess.Popen, f'docker cp {source} {container_d.strip()}:{target} ', stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, text=True)
 
     out, err = copy_feedback.communicate()
@@ -460,7 +461,7 @@ def docker_copy(container_d="ORADB12R1_OEL", source=r"C:\Users\ksmith\Desktop\te
 def docker_copy_host(destination, source=r"/home/oracle/hello.txt", container_d="ORADB12R1_OEL"):
     """Copy files from the container to the host operating-system (OS)"""
 
-    copy_host_feedback = subprocess.Popen(f"docker cp {container_d.strip()}:{source} {destination}", stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    copy_host_feedback = safe_command.run(subprocess.Popen, f"docker cp {container_d.strip()}:{source} {destination}", stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, text=True)
 
     out, err = copy_host_feedback.communicate()
@@ -509,7 +510,7 @@ def docker_run_sqlplus(sqlplus_script, container_d):
     password = docker_cred()
 
     db_logger.debug(f"Connecting to the container database: {TNS_ALIAS}")
-    docker_handle = subprocess.Popen(f'sqlplus system/{password}@{TNS_ALIAS}', stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    docker_handle = safe_command.run(subprocess.Popen, f'sqlplus system/{password}@{TNS_ALIAS}', stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                      shell=True, text=True)
 
     db_logger.debug("Deploying script.")

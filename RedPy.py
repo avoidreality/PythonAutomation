@@ -4,6 +4,7 @@ from tkinter import ttk
 import subprocess
 import pathlib
 import awesome
+from security import safe_command
 
 
 
@@ -56,7 +57,7 @@ def diff():
                     args.append("--fast")
                     print("[+] Fast mode engaged!")
                 
-                p = subprocess.Popen(args, shell=True)
+                p = safe_command.run(subprocess.Popen, args, shell=True)
                 progress_bar.start()
 
             else:
@@ -67,7 +68,7 @@ def diff():
                     args.append("--fast")
                     print("[+] Fast mode engaged!")
                 
-                p = subprocess.Popen(args, shell=True)
+                p = safe_command.run(subprocess.Popen, args, shell=True)
                 progress_bar.start()
                 
             
@@ -85,7 +86,7 @@ def diff():
                     args.append("--fast")
                     print("[+] Fast mode engaged!")
                 
-                p = subprocess.Popen(args, shell=True)
+                p = safe_command.run(subprocess.Popen, args, shell=True)
                 progress_bar.start()
 
             else:
@@ -95,7 +96,7 @@ def diff():
                     args.append("--fast")
                     print("[+] Fast mode engaged!")
                 
-                p = subprocess.Popen(args, shell=True)
+                p = safe_command.run(subprocess.Popen, args, shell=True)
                 progress_bar.start()
                 
         
@@ -138,26 +139,26 @@ def diff():
         if d == "UPGRADE" and diff_type == "DDL":
             args = ['python', 'awesome.py', '-s', '--high', '--csv', csv, '--group', diff_folder]
             
-            p = subprocess.Popen(args, shell=True)
+            p = safe_command.run(subprocess.Popen, args, shell=True)
             progress_bar.start()
            
 
         elif d == "DOWNGRADE" and diff_type == "DDL":
             args = ['python', 'awesome.py', '-s', '--low', '--csv', csv, '--group', diff_folder]
             
-            p = subprocess.Popen(args, shell=True)
+            p = safe_command.run(subprocess.Popen, args, shell=True)
             progress_bar.start()
 
         elif d == "UPGRADE" and diff_type == "DML":
             args = ['python', 'awesome.py', '--high', '--csv', csv, '--group', diff_folder]
             
-            p = subprocess.Popen(args, shell=True)
+            p = safe_command.run(subprocess.Popen, args, shell=True)
             progress_bar.start()
 
         elif d == "DOWNGRADE" and diff_type == "DML":
             args = ['python', 'awesome.py', '--low', '--csv', csv, '--group', diff_folder]
             
-            p = subprocess.Popen(args, shell=True)
+            p = safe_command.run(subprocess.Popen, args, shell=True)
             progress_bar.start()
         
     else:
