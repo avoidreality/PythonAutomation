@@ -29,7 +29,7 @@ def bornToDeploy(start_dir, deployment_script, rediff_hq, inter=True):
 
     if inter:
         print("[!] Directory changed to the following dir: %s " % rediff_hq)
-        gen_error_logger.info('[!] Directory changed to the following dir: %s ' % rediff_hq)
+        gen_error_logger.info('[!] Directory changed to the following dir: %s ', rediff_hq)
         slowdown()
                           
     #deploy the deployment_script
@@ -61,7 +61,7 @@ def bornToDeploy(start_dir, deployment_script, rediff_hq, inter=True):
 
     if inter:
         print("[!] Changing back to directory the script started in. Which is: %s" % start_dir)
-    gen_error_logger.info("[!] Changing back to directory the script started in. Which is: %s" % start_dir)
+    gen_error_logger.info("[!] Changing back to directory the script started in. Which is: %s", start_dir)
         
     os.chdir(start_dir)
 
@@ -81,7 +81,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
 
     if inter:
         print("[!] The starting directory of the program is: %s " % start_dir)
-        gen_error_logger.info("[!] The starting directory of the program is: %s " % start_dir)
+        gen_error_logger.info("[!] The starting directory of the program is: %s ", start_dir)
         slowdown()
 
     type_of_script = "typecasted"
@@ -94,7 +94,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
 
     #deploy function call here
     if redeploy:
-        gen_error_logger.info("Deploying %s deployment script to the database now." % type_of_script)
+        gen_error_logger.info("Deploying %s deployment script to the database now.", type_of_script)
         bornToDeploy(start_dir, deployment_script, rediff_hq, inter=inter)
     
     print("[+] Re-Diffing...")
@@ -119,7 +119,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
     elif not going_up and schema:
         d_dump = 'downgrade_bonanza_ddl'
 
-    gen_error_logger.info("The name of the folder for the directory is: %s." % d_dump)
+    gen_error_logger.info("The name of the folder for the directory is: %s.", d_dump)
     
     if not schema:
         #generate the DCO files for this release again
@@ -152,7 +152,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
 
     
     gen_error_logger.info("""[!] Go and get a glass of water. The diff scripts are regenerating now
-                          at the following location: %s.""" % rediff_hq)
+                          at the following location: %s.""", rediff_hq)
     if inter:
         print("""[!] Go and get a glass of water. The diff scripts are regenerating now
                           at the following location: %s.""" % rediff_hq)
@@ -225,7 +225,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
                 pass
             elif length != 5:
                 print("[!] This file may have a problem %s" % f)
-                gen_error_logger.debug("[!] This file may have a problem %s" %f)
+                gen_error_logger.debug("[!] This file may have a problem %s", f)
             
     else:
         for f in rediff_files:
@@ -237,7 +237,7 @@ def generation_error(deployment_script, csv="", dco="", rediff_hq="a directory p
                 pass
             elif length != 15:
                 print("[!] This file may have a problem %s" %f)
-                gen_error_logger.debug("[!] This file may have a problem %s" %f)
+                gen_error_logger.debug("[!] This file may have a problem %s", f)
             
 
     
@@ -260,8 +260,8 @@ if __name__ == "__main__":
 
 
     """)
-    gen_error_logger.info("GenerationError starting up at: %s" % time.asctime())
-    gen_error_logger.info("Program called with the following arguments: %s" % sys.argv[:])
+    gen_error_logger.info("GenerationError starting up at: %s", time.asctime())
+    gen_error_logger.info("Program called with the following arguments: %s", sys.argv[:])
 
     #for some reason options that do not require arguments need to precede the arguments
     #that require arguments for the script to work as designed. So --going_up before --dscript, etc.
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     rediff_location = d.absolute().parent #get the directory that the deployment script is in. This is where all the 're-diff' files are.
 
     print("[*] The 'rediff_location' based on the deployment script is: %s" % rediff_location)
-    gen_error_logger.info("[*] The 'rediff_location' based on the deployment script is: %s" % rediff_location)
+    gen_error_logger.info("[*] The 'rediff_location' based on the deployment script is: %s", rediff_location)
     
 
     
@@ -346,7 +346,7 @@ if __name__ == "__main__":
     
     #upgrade DDL re-diff
     if deployment_script and args.going_up and args.ocp and args.schema:
-        gen_error_logger.info("Starting UPGRADE DDL re-diff process with the following args: %s" % args)
+        gen_error_logger.info("Starting UPGRADE DDL re-diff process with the following args: %s", args)
         print("[+] Upgrade DDL detected.")
         generation_error(deployment_script=d, schema=True, going_up=args.going_up,
                         ocp_dir=ocp_p, rediff_hq=rediff_location, inter=args.inter, redeploy=args.nein)
@@ -354,24 +354,24 @@ if __name__ == "__main__":
     #downgrade DDL re-diff
     if deployment_script and args.ocp and args.schema and not args.going_up:
         print("[-] Downgrade DDL detected.")
-        gen_error_logger.info("Starting a DOWNGRADE DDL re-diff process with the following args: %s" % args)
+        gen_error_logger.info("Starting a DOWNGRADE DDL re-diff process with the following args: %s", args)
         generation_error(deployment_script=d, schema=True, going_up=args.going_up,
                         ocp_dir=ocp_p, rediff_hq=rediff_location, inter=args.inter, redeploy=args.nein)
 
     #upgrade DML re-diff
     if deployment_script and args.dco and not args.schema and args.going_up and args.csv:
         print("[+] Upgrade DML detected.")
-        gen_error_logger.info("Starting UPGRADE DML re-diff process with the following args: %s" % args)
+        gen_error_logger.info("Starting UPGRADE DML re-diff process with the following args: %s", args)
         generation_error(deployment_script=d, schema=args.schema, going_up=args.going_up,
                         dco=dco_p, csv=args.csv, rediff_hq=rediff_location, inter=args.inter, redeploy=args.nein)
             
     #downgrade DML re-diff
     if deployment_script and args.dco and not args.schema and not args.going_up and args.csv:
-        gen_error_logger.info("Starting DOWNGRADE DML re-diff process with the following args: %s" % args)
+        gen_error_logger.info("Starting DOWNGRADE DML re-diff process with the following args: %s", args)
         print("[-] Downgrade DML detected.")
         generation_error(deployment_script=d, schema=args.schema, going_up=args.going_up,
                         dco=dco_p, csv=args.csv, rediff_hq=rediff_location, inter=args.inter, redeploy=args.nein)
     
     print("[*] Program complete.")
-    gen_error_logger.info("[*] GenerationError stopping at: %s" % time.asctime())
+    gen_error_logger.info("[*] GenerationError stopping at: %s", time.asctime())
     

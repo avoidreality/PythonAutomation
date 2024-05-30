@@ -98,7 +98,7 @@ def pre_filter(file, interactive=False):
         with open(file, 'w') as batchf:
             if interactive:
                 print("[+] Writing filter file to disk")
-            rgfilter_logger.debug("[+] Writing filter file, %s, to disk." % file)
+            rgfilter_logger.debug("[+] Writing filter file, %s, to disk.", file)
             batchf.write(brand_new)
 
     return file
@@ -131,7 +131,7 @@ def refactor_filter(object_list_csv=OBJECT_LIST_LOCATION,
                     print(line)
                     slowdown()
 
-    rgfilter_logger.debug("These are the relevant rows found in 'refactor_filter' %s" % relevant_rows)           
+    rgfilter_logger.debug("These are the relevant rows found in 'refactor_filter' %s", relevant_rows)           
     return relevant_rows
 
 def all_ocps(ocp_directory="..\\diff_script_files\\SchemaComparison\\schema-files\\", interactive=False, object_list=OBJECT_LIST_LOCATION):
@@ -186,7 +186,7 @@ def json2disk(filter_file, memory_location, interactive=False):
     with open(filter_file, 'w') as batchf:
         if interactive:
             print("[+] Writing filter file to disk")
-        rgfilter_logger.debug("[+] Writing filter file, %s, to disk." % filter_file)
+        rgfilter_logger.debug("[+] Writing filter file, %s, to disk.", filter_file)
         batchf.write(new_json.replace("\\", ''))
 
 
@@ -201,7 +201,7 @@ def formatFileWrite(filter_file, memory_location, interactive=False):
     s = json.dumps(json_data, indent=2)
 
     rgfilter_logger.debug("[+] Attempting to write the formatted JSON from 'formatFileWrite' function.")
-    rgfilter_logger.debug("The data type of variable 's' is: %s " % str(s))
+    rgfilter_logger.debug("The data type of variable 's' is: %s ", str(s))
 
     with open(filter_file, 'w') as f2:
         f2.write(s)
@@ -235,7 +235,7 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
 
     if interactive:
         print("The current working directory is: %s " % os.getcwd())
-    rgfilter_logger.debug("The current working directory is: %s " % os.getcwd())
+    rgfilter_logger.debug("The current working directory is: %s ", os.getcwd())
 
     #initialize some variables
     current_schema = ''
@@ -246,7 +246,7 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
 
     if interactive:
         print("The length of the important data-structure, 'rows_of_data', is: %d" % len(rows_of_data))
-    rgfilter_logger.debug("The length of the important data-structure, 'rows_of_data', is: %d" % len(rows_of_data))
+    rgfilter_logger.debug("The length of the important data-structure, 'rows_of_data', is: %d", len(rows_of_data))
     for rows in rows_of_data:
         for row in rows:
             #note the current schema the script is processing and change the current schema variable when the schema changes
@@ -288,18 +288,18 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
                         lines = ''.join(lines)
                         if interactive:
                             print('This is going to be loaded into the JSON file:%s' % lines)
-                        rgfilter_logger.debug('This is going to be loaded into the JSON file:%s' % lines)
+                        rgfilter_logger.debug('This is going to be loaded into the JSON file:%s', lines)
                         #load the file as a JSON string to modify the file
                         try:
                             
                             memory_location = json.loads(lines)
                             if interactive:
                                 print("\n[+] loaded the JSON file. The type of the file is: %s\n" % type(memory_location))
-                            rgfilter_logger.debug("\n[+] loaded the JSON file. The type of the file is: %s\n" % type(memory_location))
+                            rgfilter_logger.debug("\n[+] loaded the JSON file. The type of the file is: %s\n", type(memory_location))
                         except Exception as e:
                             print("Exception thrown during JSON 'loads' operation: %s" % str(e))
                             print("You may have to many double quotes...You may have other problems. :/")
-                            rgfilter_logger.debug("Exception thrown during JSON 'loads' operation: %s" % str(e))
+                            rgfilter_logger.debug("Exception thrown during JSON 'loads' operation: %s", str(e))
                             rgfilter_logger.debug("You may have too many double-quotes. You have have other problems. :/")
                             exit()
                         
@@ -333,14 +333,14 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
                 #print the new value for this JSON element
                 if interactive:
                     print("This is the new value for the filter: %s " % str(memory_location['filters']['packageBody']))
-                rgfilter_logger.debug("This is the new value for the filter: %s " % str(memory_location['filters']['packageBody']))
+                rgfilter_logger.debug("This is the new value for the filter: %s ", str(memory_location['filters']['packageBody']))
                 edited_filters.add(current_schema) #add the current schema to the list that keeps track of which schemas were modified
                 
                 
                 #why is "memory_location" a string? What changed?
                 if interactive:
                     print('The type of "memory_location" is %s' %type(memory_location))
-                rgfilter_logger.debug('The type of "memory_location" is %s' %type(memory_location))
+                rgfilter_logger.debug('The type of "memory_location" is %s', type(memory_location))
                 
             if row[1] == "PACKAGE_SPEC":
                 if interactive:
@@ -357,7 +357,7 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
                 #why is "memory_location" a string? What changed?
                 if interactive:
                     print('The type of "memory_location" is %s' %type(memory_location))
-                rgfilter_logger.debug('The type of "memory_location" is %s' %type(memory_location))
+                rgfilter_logger.debug('The type of "memory_location" is %s', type(memory_location))
                 edited_filters.add(current_schema)
 
             if row[1] == "TABLE_TRIGGER": #this should remove the $DML triggers that are causing problems with DDL diff/sync scripts
@@ -375,7 +375,7 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
                 #why is "memory_location" a string? What changed?
                 if interactive:
                     print('The type of "memory_location" is %s' %type(memory_location))
-                rgfilter_logger.debug('The type of "memory_location" is %s' %type(memory_location))
+                rgfilter_logger.debug('The type of "memory_location" is %s', type(memory_location))
                 edited_filters.add(current_schema)
                 
                 
@@ -392,7 +392,7 @@ def update_filters(rows_of_data, schema_files='..\diff_script_files\SchemaCompar
         print("end 'update_filters' function")
         print("\nThese are the filters that were edited or should of been: %s" % str(edited_filters))
     rgfilter_logger.debug("end 'update_filters' function")
-    rgfilter_logger.debug("\nThese are the filters that were edited or should of been: %s" % str(edited_filters))
+    rgfilter_logger.debug("\nThese are the filters that were edited or should of been: %s", str(edited_filters))
 
 if __name__ == "__main__":
     try: 

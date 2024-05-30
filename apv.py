@@ -31,7 +31,7 @@ def deleteYourself(path_to_sync_script, delete_statement):
 
         new_file = [] # this list is used to create the new file
         
-        apv_logger.debug("Opening this file %s" % path_to_sync_script)
+        apv_logger.debug("Opening this file %s", path_to_sync_script)
         
         with open(path_to_sync_script) as f:
             lines = f.readlines()
@@ -39,10 +39,10 @@ def deleteYourself(path_to_sync_script, delete_statement):
             #loop through the lanes of the file based on the statement number found and
             #change the part of the line that says "INSTALL" to "UPGRADE" 
             for i in range(len(lines)):
-                apv_logger.info("Currently at line %d." % i)
+                apv_logger.info("Currently at line %d.", i)
 
                 if re.search('\\b'+delete_statement+ " := 'DELETE FROM foo.foo_bar.*;$",lines[i]):
-                    apv_logger.debug("[ERASERHEAD] This is the line to delete: %s. I found '%s' in the line. At line %d" % (lines[i], delete_statement, i))
+                    apv_logger.debug("[ERASERHEAD] This is the line to delete: %s. I found '%s' in the line. At line %d", lines[i], delete_statement, i)
                     eraserhead = i
                     
                     
@@ -62,14 +62,14 @@ def deleteYourself(path_to_sync_script, delete_statement):
     del new_file[eraserhead -4: eraserfoot + 1] #delete the previous 4 lines from the DELETE AP line. This is the DECLARE, variables, and BEGIN statements. Delete the END and the forward slash also.
     lines_to_delete = eraserfoot - eraserhead
     apv_logger.info(f"[+] Need to delete {eraserfoot - eraserhead} lines plus 5 more.")
-    apv_logger.info("Total lines to delete is around: %d" % (lines_to_delete + 4 + 1))
+    apv_logger.info("Total lines to delete is around: %d", (lines_to_delete + 4 + 1))
     print(f"[+] Total lines to delete is around: %d" % (lines_to_delete + 4 + 1))
 
     with open(path_to_sync_script, 'w') as rc:
         for codes in new_file:
             rc.write(codes)
     
-    apv_logger.info("[+] RC written sans foo_bar DELETE statements. File name %s" % path_to_sync_script)
+    apv_logger.info("[+] RC written sans foo_bar DELETE statements. File name %s", path_to_sync_script)
 
     
 
@@ -85,7 +85,7 @@ def modify(path_to_sync_script, statement, vertical_direction):
 
     done = False
 
-    apv_logger.debug("Opening this file %s" % path_to_sync_script)
+    apv_logger.debug("Opening this file %s", path_to_sync_script)
     
     with open(path_to_sync_script) as f:
         lines = f.readlines()
@@ -94,23 +94,23 @@ def modify(path_to_sync_script, statement, vertical_direction):
         #change the part of the line that says "INSTALL" to "UPGRADE" 
         for i in range(len(lines)):
             
-            apv_logger.info("Currently at line %d." % i)
+            apv_logger.info("Currently at line %d.", i)
             if re.search("^\s+" + statement + " := 'INSERT INTO foo.foo_bar.*$", lines[i]):
                         apv_logger.debug(f"Insert statement located at line {i}")
-                        apv_logger.debug(r"Found at line #%d the INSERT statement definition: %s" % (i,lines[i]))
+                        apv_logger.debug(r"Found at line #%d the INSERT statement definition: %s", i, lines[i])
                         new_file.append(lines[i])
                         the_insert = lines[i]
 
                         starts_with = "\\sEXECUTE\\sIMMEDIATE\\s" + statement +"\\b"   #find the lines below the actual insert statement with the parameterized SQL 
                         
-                        apv_logger.info("Looking for a line that starts with this: %s" % starts_with.strip())
+                        apv_logger.info("Looking for a line that starts with this: %s", starts_with.strip())
                         
                         while not re.search('^END;$', lines[i]):
-                            apv_logger.debug("[~]In 'while' this line = %s" % lines[i])
+                            apv_logger.debug("[~]In 'while' this line = %s", lines[i])
                            
                             
                             if re.search(starts_with, lines[i]) or lines[i] == the_insert:
-                                apv_logger.info("[~]This line is important: %s" % repr(lines[i]))
+                                apv_logger.info("[~]This line is important: %s", repr(lines[i]))
 
                                 #look for a line that has "INSTALL" in it then sub it with the v_dir variable
                                 if re.search('\\bINSTALL\\b', lines[i]):
@@ -143,7 +143,7 @@ def modify(path_to_sync_script, statement, vertical_direction):
                     new_file.append(lines[i])
                 else:
                     print("This line #%d is in the MATCHES list - not adding." % i)
-                    apv_logger.info("This line #%d is in the MATCHES list - not adding." % i)
+                    apv_logger.info("This line #%d is in the MATCHES list - not adding.", i)
                     
                 
                 
@@ -151,7 +151,7 @@ def modify(path_to_sync_script, statement, vertical_direction):
             for codes in new_file:
                 rc.write(codes)
         #print("[+] New RITE_COMMON sync script written to disk. File name %s" % path_to_sync_script)
-        apv_logger.info("[+] New FOO sync script written to disk with updated INSERTS. File name %s" % path_to_sync_script)
+        apv_logger.info("[+] New FOO sync script written to disk with updated INSERTS. File name %s", path_to_sync_script)
 
         #need to write these changed lines back to the diff/sync script file
 
@@ -185,12 +185,12 @@ def rc_apv(path_to_sync_script, vertical_direction='UPGRADE'):
                 #find the statement numbers for lines with 'foo_bar' in them
                 apv_logger.debug("Found a line with both 'DELETE' and 'foo_bar' in it.")
                 m = re.search('^^\s+statement[\d+|\s+]', x)
-                apv_logger.debug('The regex returned this "m" = %s. The type is: %s' % (str(m), str(type(m))))
+                apv_logger.debug('The regex returned this "m" = %s. The type is: %s', str(m), str(type(m)))
                 if m:
                     delete_match = m.group()
-                    apv_logger.debug("m.group() = %s" % str(m.group()))
+                    apv_logger.debug("m.group() = %s", str(m.group()))
                     delete_statement = delete_match.strip() #remove starting and trailing space
-                    apv_logger.debug("'delete_statement' = %s" % repr(delete_statement))
+                    apv_logger.debug("'delete_statement' = %s", repr(delete_statement))
                     
                 else:
                     apv_logger.debug(f"Something went wrong. No match found for m in DELETE block of rc_apv(). m = {m}")
@@ -200,12 +200,12 @@ def rc_apv(path_to_sync_script, vertical_direction='UPGRADE'):
             if 'INSERT' in x and 'foo_bar' in x:
                 apv_logger.debug("Found a match with both 'INSERT' and 'foo_bar' in the line.")
                 m = re.search('^\s+statement[\d+|\s+]', x) #find the line that begins with 1 or more spaces then the string 'statement' followed by zero or more digits.
-                apv_logger.debug('The regex returned this "m" = %s. The type is: %s' % (str(m), str(type(m))))
+                apv_logger.debug('The regex returned this "m" = %s. The type is: %s', str(m), str(type(m)))
                 if m:
                     insert_match = m.group()
-                    apv_logger.debug("m.group() = %s" % str(m.group()))
+                    apv_logger.debug("m.group() = %s", str(m.group()))
                     insert_statement = insert_match.strip() #remove starting and trailing space
-                    apv_logger.debug("'insert_statement' = %s" % repr(insert_statement))
+                    apv_logger.debug("'insert_statement' = %s", repr(insert_statement))
                 else:
                     apv_logger.debug(f"Something went wrong. No match found for m in INSERT block of rc_apv(). m = {m}")
                 
@@ -214,11 +214,11 @@ def rc_apv(path_to_sync_script, vertical_direction='UPGRADE'):
             modify(path_to_sync_script, insert_statement, vertical_direction)
             apv_logger.info("""'modify' function called with these args 'path_to_sync_script' = %s
                  'insert_statement' = %s,'vertical_direction' = %s
-                """ % (repr(path_to_sync_script), repr(insert_statement), repr(vertical_direction) ))
+                """, repr(path_to_sync_script), repr(insert_statement), repr(vertical_direction))
 
         if delete_statement:
             deleteYourself(path_to_sync_script, delete_statement)
-            apv_logger.info("Found a delete statement. Calling 'deleteYourself()'. The delete statement is: %s" % delete_statement)
+            apv_logger.info("Found a delete statement. Calling 'deleteYourself()'. The delete statement is: %s", delete_statement)
 
         #call the modify function with the data the script found
                             

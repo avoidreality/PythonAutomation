@@ -351,7 +351,7 @@ def EnvReport(release_directory, plug1, plug2):
         print("[i] Moving Environment Report to current release dir.")
         shutil.move(variable.GIT_REPO + os.sep + "ENVIRONMENT_REPORT.html", release_directory)
         print("[i] Environment report moved successfully.")
-        r2d2_logger.info("[i] Environment Report moved to %s" % release_directory)
+        r2d2_logger.info("[i] Environment Report moved to %s", release_directory)
     except shutil.Error as se:
         print(f"[!] Error moving the Environment report: {se}")
         r2d2_logger.error(f"[!] Got this error moving the environment report:  {se}")

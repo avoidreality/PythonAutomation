@@ -55,7 +55,7 @@ def get_in() -> str:
             return from_file
         else:
             print("[-] pdb_bot.py - get_in() - > Password file not found. Looking for %s." % str(p))
-            pdb_bot_logger.debug("[-] pdb_bot.py - get_in() - >  Password file not found. Looking for %s." % str(p))
+            pdb_bot_logger.debug("[-] pdb_bot.py - get_in() - >  Password file not found. Looking for %s.", str(p))
             exit()
         
     except Exception as e:
@@ -80,7 +80,7 @@ def open_pdb3() -> int:
     rows = query.execute("select name, open_mode from v$pdbs")
     rows_r = list(rows)
     
-    pdb_bot_logger.debug("[+] 'rows_r' = %s" % str(rows_r))
+    pdb_bot_logger.debug("[+] 'rows_r' = %s", str(rows_r))
     pdb_bot_logger.debug(f"[+] 'rows' = {repr(rows)}")
 
     #check to see if FOOPDB3 even exists in the container database (CDB)
@@ -152,7 +152,7 @@ def open_the_pdbs() -> None:
     rows = query.execute("select name, open_mode from v$pdbs")
     rows_r = list(rows)
     
-    pdb_bot_logger.debug("[+] 'rows_r' = %s" % str(rows_r))
+    pdb_bot_logger.debug("[+] 'rows_r' = %s", str(rows_r))
     pdb_bot_logger.debug(f"[+] 'rows' = {repr(rows)}")
     
     count = 0

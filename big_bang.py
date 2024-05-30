@@ -214,12 +214,12 @@ def dml(up=True, inter=False):
     
         awesome.slowdown()
 
-    big_bang_logger.debug("This file name chosen is: %s " % d_dump)
+    big_bang_logger.debug("This file name chosen is: %s ", d_dump)
     big_bang_logger.debug("")
     big_bang_logger.debug("generating the diff scripts with the following arguments to 'generateDiffScripts':")
-    big_bang_logger.debug("target_inner_folder = %s" % target_inner_folder)
-    big_bang_logger.debug("diff_dump = %s" % d_dump)
-    big_bang_logger.debug("dco_dir = %s" % variable.DOCKER_DCO)
+    big_bang_logger.debug("target_inner_folder = %s", target_inner_folder)
+    big_bang_logger.debug("diff_dump = %s", d_dump)
+    big_bang_logger.debug("dco_dir = %s", variable.DOCKER_DCO)
 
     exists = False
     if SAVEPOINT:
@@ -404,7 +404,7 @@ def ddl(up=True, inter=False):
      
         
         if len(schemas) > 0:
-            big_bang_logger.debug("[+] Found the following schemas in the csv: %s" % schemas)
+            big_bang_logger.debug("[+] Found the following schemas in the csv: %s", schemas)
             if inter:
                  print("[+] Found the following schemas in the csv file: %s" % schemas)
         else:
@@ -424,7 +424,7 @@ def ddl(up=True, inter=False):
 
         if inter:
             print("[+] Found the following OCP files in the OCP_DIR: %s" % file_names)
-        big_bang_logger.debug("[+] Found the following OCP files in the OCP_DIR: %s" % file_names)
+        big_bang_logger.debug("[+] Found the following OCP files in the OCP_DIR: %s", file_names)
         
         #this bit of code actually compares what is found in the SCHEMA_LIST.csv and what is in the config folder
         missing_schemas = set()
@@ -434,7 +434,7 @@ def ddl(up=True, inter=False):
                 missing_schemas.add(schema_config)
 
         if len(missing_schemas) > 0:   
-            big_bang_logger.error("[!] MISSING OCP(s): %s" % missing_schemas)
+            big_bang_logger.error("[!] MISSING OCP(s): %s", missing_schemas)
                 
             if inter:
                 print("[+] These are all the schemas missing: %s" % missing_schemas)
@@ -504,8 +504,8 @@ def ddl(up=True, inter=False):
         rc_file = list(rc_file)
         if rc_file: #this should fire only if rc_file has more than zero elements. 
             #make sure the consts$ package is not included in final diff scripts
-            big_bang_logger.debug("Preparing to remove consts$ package. The length of list 'rc_file' is %d " % len(rc_file))
-            big_bang_logger.debug("This is what is in the 'rc_file': %s " % rc_file)
+            big_bang_logger.debug("Preparing to remove consts$ package. The length of list 'rc_file' is %d ", len(rc_file))
+            big_bang_logger.debug("This is what is in the 'rc_file': %s ", rc_file)
             RemoveJunkFromScript.rmConsts(rc_file[0]) #just pass the first, and hopefully only, element which should be the path and file of RC
 
 
@@ -530,7 +530,7 @@ def warm_shower(deployment_script_location, rediff=False,inter=False):
     
     if inter:
         print('''The "removeWrapper('%s')" function will need to be called.''' % path_)
-    big_bang_logger.debug('''The "removeWrapper('%s')" function will need to be called.''' % path_)
+    big_bang_logger.debug('''The "removeWrapper('%s')" function will need to be called.''', path_)
     awesome.removeWrapper(path_, rediff=rediff)
     
 
@@ -602,7 +602,7 @@ def deploy(path_, up=True, inter=False, ddl_release=True):
         awesome.slowdown()
 
     big_bang_logger.debug("Now the deployment script should be created.")
-    big_bang_logger.debug("This is the function call MetaSQL.heyHoLetsGo(%s)" % path_)
+    big_bang_logger.debug("This is the function call MetaSQL.heyHoLetsGo(%s)", path_)
         
     deployment_script = MetaSQL.heyHoLetsGo(path_)
     
@@ -672,9 +672,9 @@ def human_error(deployment_log, inter=False):
         awesome.slowdown()
 
     big_bang_logger.debug("Error report created.")
-    big_bang_logger.debug("[!] Number of ORAs: %d" % errors[0])
+    big_bang_logger.debug("[!] Number of ORAs: %d", errors[0])
     print(f"[!] Number of ORAs: {errors[0]}")
-    big_bang_logger.debug("[!] Total errors: %d" % errors[-1])
+    big_bang_logger.debug("[!] Total errors: %d", errors[-1])
 ##  big_bang_logger.debug("Writing 'deployment_error_metrics.txt' to disk for code review.")
 
 
@@ -929,7 +929,7 @@ def rediff(up=True, inter=False):
                     big_bang_logger.debug(f"[!] This file in the re-diff check has zero lines: {f} in directory: {directory}")
                 elif length != 14:
                     print(f"[!] This file may have a problem %s. This code is in the {directory} directory." %f)
-                    big_bang_logger.debug(f"[!] This re-diff file may have a problem %s. This code is in the {directory} directory." %f)
+                    big_bang_logger.debug(f"[!] This re-diff file may have a problem %s. This code is in the {directory} directory.", f)
                 elif length == 14:
                     big_bang_logger.info(f"[+] RE-DIFF clean for DML script: {f.split(os.sep)[-1]} in {directory}.")
                     print(f"[+] RE-DIFF clean for DML script: {f.split(os.sep)[-1]} in {directory}.")
@@ -1074,7 +1074,7 @@ def step2():
     else:
         DUMP_DIR = awesome.createDumpDir("bigbang") 
 
-    big_bang_logger.debug("The DUMP_DIR is located here: %s" % os.path.abspath(DUMP_DIR))
+    big_bang_logger.debug("The DUMP_DIR is located here: %s", os.path.abspath(DUMP_DIR))
     print(f"[+] The DUMP_DIR is located here: %s" % os.path.abspath(DUMP_DIR))
     big_bang_logger.info("[+] Step 2 complete.")
 
@@ -1522,7 +1522,7 @@ def big_bang(
                                     
         """)
 
-    big_bang_logger.debug("The time is: %s" % time.asctime())
+    big_bang_logger.debug("The time is: %s", time.asctime())
 
     
 
@@ -1589,7 +1589,7 @@ def big_bang(
 if __name__ == "__main__":
 
     
-    big_bang_logger.debug("Program start time: %s" % time.asctime())
+    big_bang_logger.debug("Program start time: %s", time.asctime())
     start = time.time()
     big_bang_logger.info("Let's go!")
     big_bang_logger.info(r"""
@@ -1778,9 +1778,9 @@ if __name__ == "__main__":
         print("[?] Are you executing this program from a Unix shell? Do so please and type -h as a parameter to this module on the command line.")
 
     print("")
-    big_bang_logger.debug("Program stop time: %s" % time.asctime())
+    big_bang_logger.debug("Program stop time: %s", time.asctime())
     total_time = time.time() - start
     print("[+] The program took %s seconds to run. This is about %s minutes." % (str(total_time), str(total_time / 60)))
-    big_bang_logger.debug("[+] The program took %s seconds to run. This is about %s minutes." % (str(total_time), str(total_time / 60)))
+    big_bang_logger.debug("[+] The program took %s seconds to run. This is about %s minutes.", str(total_time), str(total_time / 60))
 
     

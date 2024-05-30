@@ -88,12 +88,12 @@ class LostSchemas():
                         if v_4_verbose:
                             print("[IMPORTANT SCHEMA] found - The line is: %s" % str(line))
                         SCHEMAS.append(line[0]) #add the first element to the SCHEMAS list
-                        lost_logger.info("[+] Need this schema: [%s] " % line[0])
+                        lost_logger.info("[+] Need this schema: [%s] ", line[0])
             except Exception as ex:
                 print("Shit! There was an error.")
                 print("%s" % ex)
 
-        lost_logger.info("[!] Returning this %s " % SCHEMAS)
+        lost_logger.info("[!] Returning this %s ", SCHEMAS)
 
         return SCHEMAS
 

@@ -356,7 +356,7 @@ def removeTables(v_4_verbose, remove_tables, configFile='C:\\Users\ksmith\Docume
    
         
     writeDCO(tree,'awesome-diff-tmp') #write the changes to the XML file (DCO) to a temporary location
-    low_ion_logger.debug("Writing 'awesome-diff-tmp' to the TMP_DIR located here => %s" % os.getcwd())
+    low_ion_logger.debug("Writing 'awesome-diff-tmp' to the TMP_DIR located here => %s", os.getcwd())
     #awesome.slowdown()
 
 def get_apv(where_clause=['gen','core','conf','dot']): #We need these install types for FOO_VERSIONS data
@@ -481,20 +481,20 @@ def readCSV(v_4_verbose="False", pathToCSV='C:\\Users\ksmith\Desktop\sdata_list0
             for line in lines:
                 if v_4_verbose:
                     print("This is the line %s" % repr(lines))
-                logger3.debug("This is the line %s" % repr(lines))
+                logger3.debug("This is the line %s", repr(lines))
                 
                 
                 #find the install type in the current line, which is at element 2
                 install_type = line[2]
                 if v_4_verbose:
                     print("The install type is: %s " % repr(install_type))
-                logger3.debug("The install type is: %s " % repr(install_type))
+                logger3.debug("The install type is: %s ", repr(install_type))
                 
                 
                 if install_type.replace('"', '') in itype:
                     if v_4_verbose:
                         print("The line is: %s" % str(line))
-                    logger3.debug("The line is: %s" % str(line))
+                    logger3.debug("The line is: %s", str(line))
                     
                     username = line[0]
                     tablename = line[1]
@@ -502,10 +502,10 @@ def readCSV(v_4_verbose="False", pathToCSV='C:\\Users\ksmith\Desktop\sdata_list0
                     
                     if v_4_verbose:
                         print("Found this table %s.%s in CSV." % (username,tablename))
-                    logger3.debug("Found this table %s.%s in CSV." % (username,tablename))
+                    logger3.debug("Found this table %s.%s in CSV.", username, tablename)
                     full_table = username + "." + tablename
                     #print what is in the 'where_clause' variable to a log file
-                    logger3.debug('Table = %s where_clause = %s' % (full_table, where_clause))
+                    logger3.debug('Table = %s where_clause = %s', full_table, where_clause)
                     
                     csv_where[full_table] = str(where_clause) #dictionary to store WHERE clauses 
                     the_csv_tables.append(full_table.replace('"', '')) #remove the double quotes before adding to the list :)
@@ -661,24 +661,24 @@ def compareTables(dco_tables, the_csv_tables):
     
     compare_logger.info("[+] At the top of the 'compareTables' function.")
     compare_logger.debug("#" * 60)
-    compare_logger.debug("#   These tables are in the DCO in '%s'. " % config_name)
+    compare_logger.debug("#   These tables are in the DCO in '%s'. ", config_name)
     compare_logger.debug("#   However, these tables are not in the SDATA_LIST.csv file.")
     compare_logger.debug("#" * 60)
     
     for x in dco_tables:
         if x not in the_csv_tables:
-            compare_logger.debug("[-] In DCO but not in SDATA_LIST - removing from config %s " % x)
+            compare_logger.debug("[-] In DCO but not in SDATA_LIST - removing from config %s ", x)
             tables_to_delete.append(x) #add the table name to this list to later remove from config
             
 
     
     compare_logger.debug("*" * 60)
-    compare_logger.debug("* Tables in both the CSV and DCO config - %s            "   % config_name)
+    compare_logger.debug("* Tables in both the CSV and DCO config - %s            ", config_name)
     compare_logger.debug("*" * 60)
     
     for i in the_csv_tables:
         if i in dco_tables:
-             compare_logger.debug("[+] Table in both DCO and SDATA_LIST %s " % str(i))
+             compare_logger.debug("[+] Table in both DCO and SDATA_LIST %s ", str(i))
              in_both.append(i)
 
     return tables_to_delete, in_both
@@ -705,7 +705,7 @@ def compareCSV( csv_tables, your_tables, inter=False):
         if x not in your_tables:
             if config_name.upper() in x.split('.')[0].upper(): #only look for tables in the current schema 
                 tables_missing_from_config.append(x)
-                compare_logger.debug("%s is not in the configuration file." % x)
+                compare_logger.debug("%s is not in the configuration file.", x)
                 if inter:
                     print("%s is not in the tables configuration file." % x)
                     awesome.slowdown() #interactive mode - ask the end-user to continue
@@ -771,10 +771,10 @@ def compareWhere(csv_file, dco_file, in_both, csv_where, path_to_config, inter=F
                        if k in list(csv_where.keys()):  
                            if len(csv_where[k].strip()) > 0:
                                low_ion_logger.debug(f"[+] Found a table with a where clause.")
-                               low_ion_logger.debug("[+] %s " % k)
+                               low_ion_logger.debug("[+] %s ", k)
                                where = i.find('./lWhereClause')
                                if where != None:
-                                   low_ion_logger.debug("Config Left Where (lWhereClause) = %s" % where.text)
+                                   low_ion_logger.debug("Config Left Where (lWhereClause) = %s", where.text)
                                else:
                                    low_ion_logger.error(f"Config left where (lWhereClause) = None in {schema}.{table_name}")
                                if inter and where:
@@ -787,7 +787,7 @@ def compareWhere(csv_file, dco_file, in_both, csv_where, path_to_config, inter=F
                                    awesome.slowdown()
                                    print("Populating the WHERE clauses.")
 
-                               low_ion_logger.debug("This is what is in the dictionary for table %s = %s. " % (k, csv_where[k]))
+                               low_ion_logger.debug("This is what is in the dictionary for table %s = %s. ", k, csv_where[k])
                                low_ion_logger.debug("Populating the WHERE clauses.")
                                    
                                i.find('./lWhereClause').text = 'where ' + csv_where[k].replace('"', '').strip()
@@ -825,7 +825,7 @@ def writeDCO(tree_please, config_name, path_to_config="FooBarLowIonConfigDir", i
         if inter:
             print("[*] The new configuration file was written to disk. The file name is '%s_.dco'." % (config_name))
 
-        low_ion_logger.info("[*] The new configuration file was written to disk. The file name is '%s_.dco'." % (config_name))
+        low_ion_logger.info("[*] The new configuration file was written to disk. The file name is '%s_.dco'.", (config_name))
 
     
 
@@ -839,7 +839,7 @@ def compareIt(csv_file, dco_file, path_to_config=".." + os.sep +"Programmaticall
         low_ion_logger.info(f"[+] tmpDir= {tmpDir}")
         low_ion_logger.info(f"[+] v_4_verbose={v_4_verbose}")
         low_ion_logger.info(f"[+] inter={inter}")
-        low_ion_logger.info("[+] The current directory is: %s" % os.getcwd())
+        low_ion_logger.info("[+] The current directory is: %s", os.getcwd())
 
         
         #step 1 - get the tables from the configuration file

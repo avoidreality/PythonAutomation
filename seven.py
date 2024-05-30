@@ -25,7 +25,7 @@ def readInFile(file):
         try:
             the_file = f.readlines()
         except Exception as e:
-            seven_logger.critical("""[!][!] Cannot open "%s", because of an error: %s""" % (str(file), str(e)))
+            seven_logger.critical("""[!][!] Cannot open "%s", because of an error: %s""", str(file), str(e))
             the_file = None
             
             
@@ -42,7 +42,7 @@ def lookingGlass(file):
             r = ord(file[i][j]) #convert the character to the number, ordinal 
             if r > 127 or r < 0: #see if the number is out of the 7-bit range
                 seven_logger.error("[!] character outside of 7 bit range detected.")
-                seven_logger.debug("The character is: %s at column #%d. At line #%d." % (file[i][j], j+1, i))
+                seven_logger.debug("The character is: %s at column #%d. At line #%d.", file[i][j], j+1, i)
                 problem_lines.add(i)
 
 
@@ -78,7 +78,7 @@ def editFile(file, problem_lines, defaultMode=True):
         
 
 
-    seven_logger.debug("This is in the 'line_mapping' dictionary: %s" % line_mapping)
+    seven_logger.debug("This is in the 'line_mapping' dictionary: %s", line_mapping)
 
     #update the file with what we populated the dictionary with
     for k,v in line_mapping.items():
@@ -94,7 +94,7 @@ def editFile(file, problem_lines, defaultMode=True):
     with open(file_name, 'w') as s:
         for line in file2:
             s.write(line)
-        seven_logger.info("Writing cleaned file to disk, '%s'." % file_name)
+        seven_logger.info("Writing cleaned file to disk, '%s'.", file_name)
         global files_edited
         files_edited.append(file_name)
 
@@ -110,11 +110,11 @@ def install(p):
     path = pathlib.Path(p)
     for x in path.rglob("*"):
         if x.is_dir():
-            seven_logger.info("[+] Now testing this dir for non-7-bit characters: %s" % str(x))
+            seven_logger.info("[+] Now testing this dir for non-7-bit characters: %s", str(x))
         elif x.suffix in files_not_to_scan:
-            seven_logger.debug("[-] Skipping over this zip file: %s." % str(x))
+            seven_logger.debug("[-] Skipping over this zip file: %s.", str(x))
         else:
-            seven_logger.info("Testing this file: %s" % x)
+            seven_logger.info("Testing this file: %s", x)
             actionIsGo(x)
 
 
@@ -127,8 +127,8 @@ def actionIsGo(p):
         problems = lookingGlass(f)
         
         if problems:
-            seven_logger.error("[!] Found %d line(s) with problems." % len(problems))
-            seven_logger.error("Editing the following file to remove non-7-bit ASCII characters: %s" % str(p))
+            seven_logger.error("[!] Found %d line(s) with problems.", len(problems))
+            seven_logger.error("Editing the following file to remove non-7-bit ASCII characters: %s", str(p))
             editFile(p, problems, defaultMode=False)
             
         else:
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     if args.install:
         p = pathlib.Path(str(args.install).strip())
         install(p)
-        seven_logger.info("[+] %d files edited. These are the files: %s." % (len(files_edited), files_edited))
+        seven_logger.info("[+] %d files edited. These are the files: %s.", len(files_edited), files_edited)
 
     else:
         #interactive - test mode
@@ -163,7 +163,7 @@ if __name__ == "__main__":
 
 
     
-    seven_logger.info("[+] %d files edited. These are the files: %s." % (len(files_edited), files_edited))
+    seven_logger.info("[+] %d files edited. These are the files: %s.", len(files_edited), files_edited)
     print("[+] %d files edited. These are the files: %s." % (len(files_edited), files_edited))
     
     seven_logger.info("Program complete.")

@@ -174,7 +174,7 @@ def db_stuff(pdb, docker=None):
     
     database = cx_Oracle.makedsn(HOST, PORT, service_name=SERVICE_NAME)
     connection = cx_Oracle.connect(user='username', password="password", dsn=database)
-    db_logger.debug("Connected to database %s as username" % SERVICE_NAME)
+    db_logger.debug("Connected to database %s as username", SERVICE_NAME)
     cursor1 = connection.cursor()
 
     return cursor1, connection        
@@ -207,7 +207,7 @@ def toggle_circular_constraints(enable=True, docker_mode=None):
          #returned_stuff[0] = cursor_t.execute(f'alter session set container = {pdb}')
          #db_logger.debug(f"Setting the container to {pdb} returned the following: {returned_stuff[0]}")
          returned_stuff[0] = cursor_t.execute("SELECT SYS_CONTEXT ('USERENV', 'SESSION_USER') FROM DUAL")
-         db_logger.debug("The current user is: %s " % str(returned_stuff[0]))
+         db_logger.debug("The current user is: %s ", str(returned_stuff[0]))
          returned_stuff[1] = cursor_t.execute("select name from v$services")
 
          if returned_stuff[1]:
@@ -265,7 +265,7 @@ def toggle_circular_constraints(enable=True, docker_mode=None):
             
             db_logger.error(f"[+] Problems with PDB: {pdb}")
             db_logger.error("[+] In the exception block.")
-            db_logger.error("[+] This is the exception: %s" % str(e))
+            db_logger.error("[+] This is the exception: %s", str(e))
             print("[+] In the exception block.")
             print("[+] This is the exception: %s" % str(e))
             print("\n\n\n")

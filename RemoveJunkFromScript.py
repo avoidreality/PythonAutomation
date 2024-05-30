@@ -95,7 +95,7 @@ def rmCommit(path):
     """
     count = 0 #let us go ahead and count how man commits were removed
     
-    junk_logger.debug("The path passed is: %s" % str(path))
+    junk_logger.debug("The path passed is: %s", str(path))
     
     p = pathlib.Path(path)
 
@@ -103,12 +103,12 @@ def rmCommit(path):
     found = p.glob("*.sql")
     found = list(found) #change the generator to a list
 
-    junk_logger.debug("These are the SQL files found:%s" % found)
+    junk_logger.debug("These are the SQL files found:%s", found)
 
     for file in found: #loop over the files found that end in .sql and remove the commit statements and write the clean files to disk
 
         filename = file.name #a path object should have a 'name' attribute
-        junk_logger.debug("Looking through this file now: %s" % filename)
+        junk_logger.debug("Looking through this file now: %s", filename)
 
         new_file = []
         
@@ -130,7 +130,7 @@ def rmCommit(path):
                 for line in new_file:
                     pristine.write(line)
                 print("[+] %d commit statements removed from file:%s and written to disk." % (count, filename))
-                junk_logger.info("[+] %d commit statements removed from file:%s and written to disk." % (count, filename))
+                junk_logger.info("[+] %d commit statements removed from file:%s and written to disk.", count, filename)
         else:
             junk_logger.info("[-] No commit statements found.")
 
@@ -209,7 +209,7 @@ def rmWeirdo(path):
             print(f"[+] Currently processing this file: {file}")
 
             filename = file.name #a path object should have a 'name' attribute
-            junk_logger.debug("Looking through this file now: %s" % filename)
+            junk_logger.debug("Looking through this file now: %s", filename)
 
             new_file = []
         
@@ -231,7 +231,7 @@ def rmWeirdo(path):
                     for line in new_file:
                         pristine.write(line)
                     print("[+] %d WEIRDO objects removed from file:%s and written to disk." % (count_weirdo, filename))
-                    junk_logger.info("[+] %d WEIRDO objects removed from file:%s and written to disk." % (count_weirdo, filename))
+                    junk_logger.info("[+] %d WEIRDO objects removed from file:%s and written to disk.", count_weirdo, filename)
             else:
                 junk_logger.info("[-] No WEIRDO objects found sir.")
                 
@@ -253,7 +253,7 @@ def rmCompile(path):
 
     """
     count = 0 #keep track of ALTER PACKAGE COMPILE statements - well count them...
-    junk_logger.debug("The path passed is: %s" % str(path))
+    junk_logger.debug("The path passed is: %s", str(path))
     
     p = pathlib.Path(path)
 
@@ -261,12 +261,12 @@ def rmCompile(path):
     found = p.glob("*.sql")
     found = list(found) #change the generator to a list
 
-    junk_logger.debug("These are the SQL files found:%s" % found)
+    junk_logger.debug("These are the SQL files found:%s", found)
 
     for file in found: #loop over the files found that end in .sql and remove the ALTER COMPILE statements and write the clean files to disk
 
         filename = file.name #a path object should have a 'name' attribute
-        junk_logger.debug("Looking through this file now: %s" % filename)
+        junk_logger.debug("Looking through this file now: %s", filename)
 
         new_file = []
         
@@ -287,7 +287,7 @@ def rmCompile(path):
                 for line in new_file:
                     pristine.write(line)
                 print("[+] %d ALTER COMPILE statements removed from file:%s and written to disk." % (count, filename))
-                junk_logger.info("[+] %d ALTER COMPILE statements removed from file:%s and written to disk." % (count, filename))
+                junk_logger.info("[+] %d ALTER COMPILE statements removed from file:%s and written to disk.", count, filename)
         else:
             junk_logger.info("[-] No ALTER COMPILE statements found.")
 

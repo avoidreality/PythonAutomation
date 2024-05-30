@@ -141,7 +141,7 @@ def removeWrapper(directory, rediff=False):
 
     
     if DEBUG:
-        awesome_logger.debug("The script, %s, changed to this directory, %s, in batch mode." % (sys.argv[0], directory))
+        awesome_logger.debug("The script, %s, changed to this directory, %s, in batch mode.", sys.argv[0], directory)
 
     if rediff:
         files = glob.glob("*RE-DIFF.sql")
@@ -149,7 +149,7 @@ def removeWrapper(directory, rediff=False):
         files = glob.glob("*.sql")
 
     if DEBUG:
-        awesome_logger.debug("Found these files in batch mode: %s" % files)
+        awesome_logger.debug("Found these files in batch mode: %s", files)
     for f in files:
         RemoveJunkFromScript.rmJunk(f)
 
@@ -165,12 +165,12 @@ def getDown(directory):
         exit()
         
     if DEBUG:
-        awesome_logger.debug("The current directory is: %s" % os.getcwd())
+        awesome_logger.debug("The current directory is: %s", os.getcwd())
     files = [glob.glob(e) for e in ["*.dco", "*.ocp"]]
     for f in files:
         for x in f:
             if DEBUG:
-                awesome_logger.debug("Making this file [%s] a downgrade. " % str(x))
+                awesome_logger.debug("Making this file [%s] a downgrade. ", str(x))
             Direction.goDown(x)
             
             
@@ -185,12 +185,12 @@ def getUp(directory):
         print(f"Caught this exception -> {e}")
         exit()
     if DEBUG:
-        awesome_logger.debug("The current directory is: %s" % os.getcwd())
+        awesome_logger.debug("The current directory is: %s", os.getcwd())
     files = [glob.glob(e) for e in ["*.dco", "*.ocp"]]
     for f in files:
         for k in f:
             if DEBUG:
-                awesome_logger.debug("Making this file [%s] an upgrade." % str(k))
+                awesome_logger.debug("Making this file [%s] an upgrade.", str(k))
             Direction.goUP(k)
             
             
@@ -252,9 +252,9 @@ def deleteDirtyFiles(absolutepath, inter=False):
                 slowdown()
                 
             
-            awesome_logger.debug("[!] Need to remove this file: %s" % str(af))
+            awesome_logger.debug("[!] Need to remove this file: %s", str(af))
             os.remove(af) #remove the file
-            awesome_logger.debug("[-] File, [%s], removed!" % str(af))
+            awesome_logger.debug("[-] File, [%s], removed!", str(af))
             
             if inter:
                 print("[-] File, [%s], removed!" % str(af))
@@ -283,7 +283,7 @@ def batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR, inter=False):
 
     awesome_logger.debug("[+] At the top of the 'batchConfig' function.")
 
-    awesome_logger.debug("The dump_dir parameter = %s" % dump_dir)
+    awesome_logger.debug("The dump_dir parameter = %s", dump_dir)
     
     current_dir = os.getcwd()
     current_dir = os.path.abspath(current_dir)
@@ -297,7 +297,7 @@ def batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR, inter=False):
     awesome_logger.info(f"Changing directories to the 'dco_dir' located here: {dco_dir}")
     os.chdir(dco_dir)
     
-    awesome_logger.debug("The current directory is: %s" % os.getcwd())
+    awesome_logger.debug("The current directory is: %s", os.getcwd())
     if inter:
         print("The current directory is: %s" % os.getcwd())
         slowdown()
@@ -305,7 +305,7 @@ def batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR, inter=False):
     #find the DCO files in the current directory
     files = glob.glob('*.dco')
     
-    awesome_logger.debug("This is the list of files found: %s " % files)
+    awesome_logger.debug("This is the list of files found: %s ", files)
 
     
     if inter:
@@ -330,12 +330,12 @@ def batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR, inter=False):
         
         os.chdir(dco_dir)
         
-        awesome_logger.debug("Currently comparing this file: %s with this SDATA_LIST: %s. " % (f, csv_file))
+        awesome_logger.debug("Currently comparing this file: %s with this SDATA_LIST: %s. ", f, csv_file)
         LowIonConfig.compareIt(csv_file=csv_file, dco_file=f, path_to_config=dump_dir, tmpDir=dco_dir, inter=inter)
-        awesome_logger.debug("Done processing this file %s " % f)
+        awesome_logger.debug("Done processing this file %s ", f)
         
     
-    awesome_logger.debug("Files should be written here: %s " % os.path.abspath(DUMP_DIR))
+    awesome_logger.debug("Files should be written here: %s ", os.path.abspath(DUMP_DIR))
     if inter:
         print("Files should be written here: %s " % os.path.abspath(DUMP_DIR))
         slowdown()
@@ -512,7 +512,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
 
         """)
 
-    awesome_logger.debug("The time is: %s" % time.asctime())
+    awesome_logger.debug("The time is: %s", time.asctime())
 
     if robomode:
 
@@ -552,7 +552,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
         slowdown()
 
     
-    awesome_logger.debug("object_list = %s" % object_list)
+    awesome_logger.debug("object_list = %s", object_list)
     
     if inter:    
         #fix spacing here
@@ -590,7 +590,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
         print("The DUMP_DIR is located here: %s" % os.path.abspath(DUMP_DIR))
         slowdown()
 
-    awesome_logger.debug("The DUMP_DIR is located here: %s" % os.path.abspath(DUMP_DIR))
+    awesome_logger.debug("The DUMP_DIR is located here: %s", os.path.abspath(DUMP_DIR))
 
     #check for  missing DCO configuration files
     lost_dco = LostSchemas.LostSchemas()
@@ -626,8 +626,8 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
             awesome_logger.debug("Calling the 'batchConfig()' function")
             batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR)
             awesome_logger.debug("The 'batchConfig(csv_file, dco_dir, inter)' function has completed.")
-            awesome_logger.debug("The 'csv_file' variable is: %s" % csv_file)
-            awesome_logger.debug("The 'dco_dir' variable is: %s" % dco_dir)
+            awesome_logger.debug("The 'csv_file' variable is: %s", csv_file)
+            awesome_logger.debug("The 'dco_dir' variable is: %s", dco_dir)
         else:
             print("Calling the 'batchConfig()' function in interactive mode.")
             batchConfig(csv_file, dco_dir, dump_dir=DUMP_DIR, inter=inter)
@@ -656,7 +656,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
   
         schemas = lost.readSchemaCSV(pathToCSV=csv_file) #this returns the schemas in 'core' that have the 'X' 
         schemas = set(schemas) #only get unique values - this is not a problem with SCHEMA_LIST.csv but just in case
-        awesome_logger.debug("[+] Found the following schemas in the csv file passed into the 'csv' argument: %s" % schemas)
+        awesome_logger.debug("[+] Found the following schemas in the csv file passed into the 'csv' argument: %s", schemas)
         if inter:
             if len(schemas) > 0:
                 print("[+] Found the following schemas in the csv file passed into the 'csv' argument: %s" % schemas)
@@ -664,7 +664,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
                 print("[-] The schemas list is empty. You may want to look at the SCHEMA_LIST.csv file passed into the --csv argument.")
 
         if len(schemas) > 0:
-            awesome_logger.debug("[+] Found the following schemas in the csv file passed into the 'csv' argument: %s" % schemas)
+            awesome_logger.debug("[+] Found the following schemas in the csv file passed into the 'csv' argument: %s", schemas)
         else:
             awesome_logger.debug("[-] The schemas list is empty. You may want to look at the SCHEMA_LIST.csv file passed into the --csv argument.")
 
@@ -678,7 +678,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
 
         if inter:
             print("[+] Found the following file_names: %s" % file_names)
-        awesome_logger.debug("[+] Found the following file_names: %s" % file_names)
+        awesome_logger.debug("[+] Found the following file_names: %s", file_names)
         
         #prints out what is found in the 'diff_script_files\SchemaComparison' folder 
         if inter or DEBUG:
@@ -700,12 +700,12 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
                 missing_schemas.append(schema_config)
 
         if len(missing_schemas) > 0:   
-            missing_schema_logger.error("The following schema is missing a RedGate OCP configuration file in 'bonanza' mode: %s" % missing_schemas)
+            missing_schema_logger.error("The following schema is missing a RedGate OCP configuration file in 'bonanza' mode: %s", missing_schemas)
                 
         if inter:
             print("[+] These are all the schemas missing: %s" % missing_schemas)
 
-        awesome_logger.debug("[+] These are all the schemas missing: %s" % missing_schemas)
+        awesome_logger.debug("[+] These are all the schemas missing: %s", missing_schemas)
 
         #done with checking if schema files are present
 
@@ -721,16 +721,16 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
                 print("The object_list variable = %s " % str(object_list))
                 slowdown()
 
-            awesome_logger.debug("The object_list variable = %s " % str(object_list))
+            awesome_logger.debug("The object_list variable = %s ", str(object_list))
 
             if O_LIST != None:
                 if inter:
                     print("[+] O_LIST = %s" % str(O_LIST))
-                awesome_logger.debug("[+] O_LIST = %s" % str(O_LIST))
+                awesome_logger.debug("[+] O_LIST = %s", str(O_LIST))
                 import RGFilter
                 #find the rows with the "all_ocps" call from OBJECT_LIST.csv then update with the filters
                 important_rows = RGFilter.all_ocps(ocp_directory=dco_dir, object_list=object_list,interactive=inter) #in this case 'dco_dir' is the ocp_dir
-                awesome_logger.debug("This is in the important rows: %s" % important_rows)
+                awesome_logger.debug("This is in the important rows: %s", important_rows)
                 RGFilter.update_filters(important_rows, schema_files=dco_dir, interactive=inter) #The 'dco_dir' actually contains the ocp_dir in this case
                 if inter:
                     print("Done applying filters to OCP configuration files.")
@@ -740,7 +740,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
             print("There was a problem creating the OCP filters for RG")
             awesome_logger.debug("There was a problem creating the OCP filters for RG")
             print("Please see the following error/exception: %s." % str(e))
-            awesome_logger.debug("Please see the following error/exception: %s." % str(e))
+            awesome_logger.debug("Please see the following error/exception: %s.", str(e))
 
         
 
@@ -771,7 +771,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
             awesome_logger.debug("In Bonanza Mode - DUMP_DIR variable set! :)")
     except Exception as e:
         print("Exception thrown: %s" % str(e))
-        awesome_logger.debug("Exception thrown: %s" % str(e))
+        awesome_logger.debug("Exception thrown: %s", str(e))
 
     
 
@@ -841,17 +841,17 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
     
         slowdown()
 
-    awesome_logger.debug("This file name chosen is: %s " % d_dump)
+    awesome_logger.debug("This file name chosen is: %s ", d_dump)
     awesome_logger.debug("")
     awesome_logger.debug("generating the diff scripts with the following arguments to 'generateDiffScripts':")
-    awesome_logger.debug("DUMP_DIR = %s" % DUMP_DIR)
-    awesome_logger.debug("diff_dump = %s" % d_dump)
-    awesome_logger.debug("schema_compare = %s" % schema)
+    awesome_logger.debug("DUMP_DIR = %s", DUMP_DIR)
+    awesome_logger.debug("diff_dump = %s", d_dump)
+    awesome_logger.debug("schema_compare = %s", schema)
     if schema:
-        awesome_logger.debug("ocp_dir = %s" % dco_dir)
+        awesome_logger.debug("ocp_dir = %s", dco_dir)
                 
     else:
-        awesome_logger.debug("dco_dir = %s" % dco_dir)
+        awesome_logger.debug("dco_dir = %s", dco_dir)
 
    
 
@@ -944,7 +944,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
     
     if inter:
         print('''The "removeWrapper('%s')" function will need to be called.''' % path_)
-    awesome_logger.debug('''The "removeWrapper('%s')" function will need to be called.''' % path_)
+    awesome_logger.debug('''The "removeWrapper('%s')" function will need to be called.''', path_)
     removeWrapper(path_)
     
 
@@ -996,7 +996,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
         slowdown()
 
     awesome_logger.debug("Now the deployment script should be created.")
-    awesome_logger.debug("This is the function call MetaSQL.heyHoLetsGo(%s)" % path_)
+    awesome_logger.debug("This is the function call MetaSQL.heyHoLetsGo(%s)", path_)
         
     deployment_script = MetaSQL.heyHoLetsGo(path_)
 
@@ -1041,8 +1041,8 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
         print("Error report created.")
 
     awesome_logger.debug("Error report created.")
-    awesome_logger.debug("[!] Number of ORAs: %d" % errors[0])
-    awesome_logger.debug("[!] Total errors: %d" % errors[-1])
+    awesome_logger.debug("[!] Number of ORAs: %d", errors[0])
+    awesome_logger.debug("[!] Total errors: %d", errors[-1])
 
     if rdiff:
         if inter:
@@ -1100,7 +1100,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
         
         if inter:
             print('''The "removeWrapper('%s', rediff=True)" function will need to be called.''' % path_)
-        awesome_logger.debug('''The "removeWrapper('%s', rediff=True)" function will need to be called.''' % path_)
+        awesome_logger.debug('''The "removeWrapper('%s', rediff=True)" function will need to be called.''', path_)
         removeWrapper(path_, rediff=True)
 
         #clean the directory of RE-DIFF.sql scripts that were not cleaned of "sys buffer gremlins"
@@ -1125,7 +1125,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
                     pass
                 elif length != 5:
                     print("This file may have a problem %s" % f)
-                    awesome_logger.debug("This file may have a problem %s" %f)
+                    awesome_logger.debug("This file may have a problem %s", f)
                 
         else:
             for f in rediff_files:
@@ -1134,7 +1134,7 @@ def Bonanza(csv_file, dco_dir, vertical_direction=True, schema=False, inter=Fals
                     pass
                 elif length != 15:
                     print("This file may have a problem %s" %f)
-                    awesome_logger.debug("This file may have a problem %s" %f)
+                    awesome_logger.debug("This file may have a problem %s", f)
 
 
     if not inter and not gui:
@@ -1170,7 +1170,7 @@ if __name__ == "__main__":
     robot_mode = False
 
     awesome_logger.debug("=" * 99)
-    awesome_logger.debug("Program called like so: %s" % str(sys.argv[:]))
+    awesome_logger.debug("Program called like so: %s", str(sys.argv[:]))
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], 'ic:d:g:hvrsx', ['instructions', 'robot', 'direction=',
                                                                     'directionDir=', 'chdir=',
