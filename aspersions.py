@@ -28,6 +28,7 @@ import pdb_bot
 import clean_pdbs
 import ConnectToOracle
 import awesome
+from security import safe_requests
 
 WORKTREE3= "C:\\workspace\\foo\\foo-db_FOOPDB3"
 
@@ -258,14 +259,11 @@ def check_build_output(build_number):
        If this is a database build the return value will be "True, fizz-db-2.11.6-foobar" for example. So if the 2nd return value is not none
        this is an artifact or database build and not just a branch build. 
     """
-
-    #inject the URL with the 'build_number' - do not try this at home. :)
-    import requests
     import re
 
     URL = f"http://hostname.foo.local:8080/job/CI__fizz__fizz-db/{build_number}/logText/progressiveText?start=0"
 
-    reply = requests.get(url=URL)
+    reply = safe_requests.get(url=URL)
     branch = None
 
     if reply.ok:
@@ -317,14 +315,12 @@ def build_branch(branch_name):
 def find_jenkins_builds():
     """Use the Jenkins REST API and XPATH to find the first 10 builds recently built."""
 
-    import requests
-
     build_numbers = [] 
     
     #loop through the and get the first ten build numbers - return them to the caller
     for i in range(11):
         URL = f"http://hostname-vmli.foo.local:8080/job/CI__fizz__fizz-db/api/xml?xpath=//build[{i}]/number"
-        reply = requests.get(URL)
+        reply = safe_requests.get(URL)
 
         if reply.ok:
             print(f"[+] {i}.) Jenkins build number found: {reply.text}")
