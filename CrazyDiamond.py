@@ -8,6 +8,7 @@ import sys
 from tqdm import tqdm
 import awesome
 import pdb
+from security import safe_command
 
 
 
@@ -106,14 +107,14 @@ def generateDiffScripts(directory, diff_dump, schema_compare, re_diff=False, fil
             if filters:
                 #note the /igr option to use a filter file for the sco.exe program - This is in version 5.4.0.2010
                 print("[!!!] Calling SCO.exe with filters. This has a bug in the RG software not this script.")
-                subprocess.run(['%s ' % program, '/dao', '/project:%s' % f, '/igr:%s' % ignore_rules, '/scriptfile:%s' % path_and_file])
+                safe_command.run(subprocess.run, ['%s ' % program, '/dao', '/project:%s' % f, '/igr:%s' % ignore_rules, '/scriptfile:%s' % path_and_file])
             else:
                 print("[+] Calling the SCO.exe program WITHOUT filters.")
-                subprocess.run(['%s ' % program, '/dao' ,'/project:%s' % f, '/scriptfile:%s' % path_and_file])
+                safe_command.run(subprocess.run, ['%s ' % program, '/dao' ,'/project:%s' % f, '/scriptfile:%s' % path_and_file])
                 
         else:
             #subprocess.run(['%s ' % program,'/project:%s' % f, '/scriptfile:%s' % path_and_file],  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            subprocess.run(['%s ' % program,'/project:%s' % f, '/scriptfile:%s' % path_and_file]) #print everything to the console
+            safe_command.run(subprocess.run, ['%s ' % program,'/project:%s' % f, '/scriptfile:%s' % path_and_file]) #print everything to the console
             
         
     print("%d configuration script(s) found. You should have %d diff script(s)." %(len(files), len(files)))
