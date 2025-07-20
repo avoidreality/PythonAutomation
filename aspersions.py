@@ -242,7 +242,7 @@ def create_branch(new_branch, rc_branch, token):
     JSON['ref'] = rc_branch
     JSON['branch'] = new_branch
 
-    reply = requests.post(url=URL, headers=HEADERS, data=JSON)
+    reply = requests.post(url=URL, headers=HEADERS, data=JSON, timeout=60)
     
 
     print(f"Is the reply OK? Answer: {reply.ok}")
@@ -265,7 +265,7 @@ def check_build_output(build_number):
 
     URL = f"http://hostname.foo.local:8080/job/CI__fizz__fizz-db/{build_number}/logText/progressiveText?start=0"
 
-    reply = requests.get(url=URL)
+    reply = requests.get(url=URL, timeout=60)
     branch = None
 
     if reply.ok:
@@ -304,7 +304,7 @@ def build_branch(branch_name):
 
     URL = f"http://hostname.foo.local:8080/job/REBUILD_CI_PROJECT/buildWithParameters?NAMESPACE_AND_PROJECT=fizz/fizz-db&GIT_BRANCH={branch_name}"
 
-    reply = requests.post(url=URL)
+    reply = requests.post(url=URL, timeout=60)
 
     if reply.ok:
         print("[+] The build should be starting... ")
@@ -324,7 +324,7 @@ def find_jenkins_builds():
     #loop through the and get the first ten build numbers - return them to the caller
     for i in range(11):
         URL = f"http://hostname-vmli.foo.local:8080/job/CI__fizz__fizz-db/api/xml?xpath=//build[{i}]/number"
-        reply = requests.get(URL)
+        reply = requests.get(URL, timeout=60)
 
         if reply.ok:
             print(f"[+] {i}.) Jenkins build number found: {reply.text}")
@@ -418,7 +418,7 @@ def merge_request(target_branch,source_branch, name, token):
 
     URL = f"https://gitlab.foohosted.com/api/v4/projects/fizz%2Ffizz-db/merge_requests?target_branch={target_branch}&source_branch={source_branch}&title={name}"
 
-    reply = requests.post(url=URL, headers=HEADER)
+    reply = requests.post(url=URL, headers=HEADER, timeout=60)
 
     if reply.ok:
         print("[+] Merge request reply is OK.")
