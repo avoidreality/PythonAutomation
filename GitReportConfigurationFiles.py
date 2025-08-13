@@ -4,6 +4,7 @@ import pathlib
 import os
 import argparse
 import variable
+from security import safe_command
 
 f1 = None
 s = None
@@ -58,7 +59,7 @@ def get_diff_info(first, second, environment, verbose=False):
         command = """git diff -U0 origin/{}..origin/{} -- install/{}""".format(first, second, environment)
 
     try:
-        r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) # This seems to prevent the UnicodeDecodeError
+        r = safe_command.run(subprocess.Popen, command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) # This seems to prevent the UnicodeDecodeError
         #r = subprocess.getoutput(command) #this can throw a UnicodeDecodeError
     except Exception as eg:
         print(f"[!] There was an exception running the 'git diff' command to create the environment report. The exception was: {eg}")

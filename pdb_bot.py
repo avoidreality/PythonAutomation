@@ -17,6 +17,7 @@ import pathlib
 import logging
 import sys
 import re
+from security import safe_command
 
 TOOLS_DIR = "/usr/local/bin"
 CYGWIN_PATH = "C:\\cygwin64"
@@ -210,7 +211,7 @@ def docker_wide_open(container="ORADB12R1_OEL", pdb="FOOPDB1"):
     pdb_bot_logger.info("[+] Starting 'docker_wide_open' function now.")
     print(f"[+] Trying to open {pdb} in Docker container {container} now.")
 
-    docker_con2 = subprocess.Popen(f'docker exec -i {container} bash', text=True, stdin=subprocess.PIPE,
+    docker_con2 = safe_command.run(subprocess.Popen, f'docker exec -i {container} bash', text=True, stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
@@ -254,7 +255,7 @@ def docker_open_pdbs(container="ORADB12R1_OEL"):
     pdb2_state = ""
 
     
-    docker_con = subprocess.Popen(f'docker exec -i {container} bash', text=True, stdin=subprocess.PIPE,
+    docker_con = safe_command.run(subprocess.Popen, f'docker exec -i {container} bash', text=True, stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 

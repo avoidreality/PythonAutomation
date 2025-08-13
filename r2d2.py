@@ -9,6 +9,7 @@ import threading
 import pathlib
 import variable
 import tempfile
+from security import safe_command
 
 #logging
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -646,7 +647,7 @@ def getBuildHash(branch='test'):
         curl_args = ['curl', '-fsS', '--connect-timeout', '5', '--header', f'PRIVATE-TOKEN:{token}', #token variable is here! :)
                      f'https://gitlab.megacorp.com/api/v4/projects/719/repository/files/settings.xml/raw?ref=ritehorizon-{branch}']
         
-        output = subprocess.run(curl_args,capture_output=True, text=True)
+        output = safe_command.run(subprocess.run, curl_args,capture_output=True, text=True)
 
         if output.stdout:
             xml = output.stdout #'xml' is a string
